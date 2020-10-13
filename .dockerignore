@@ -1,0 +1,11 @@
+.git/
+.idea/
+.vscode/
+.dockerignore
+.gitignore
+Dockerfile
+README.md
+Jenkinsfile
+
+*.pyc
+docker_upload.sh

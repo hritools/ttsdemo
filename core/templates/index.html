@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+
+{% block body %}
+<div>
+    <h1>TTS Demo</h1>
+</div>
+<div>
+    <div class="div-ta"><textarea id="textbox" placeholder="Enter your text here"></textarea></div>
+    <div class="div-btn"><button id="play-button">Play</button></div>
+</div>
+<div style="display: none;">
+    <audio id="player" controls>
+        <source id="audio-source" src="">
+        Your broser does not support audio playback.
+    </audio>
+</div>
+{% endblock %}
+
+
+{% block inline_script %}
+<script>
+    $(document).ready(function () {
+        var player = document.getElementById("player");
+        var audioSource = document.getElementById("audio-source");
+        var textbox = document.getElementById('textbox');
+
+        function onSuccess(data) {
+            audioSource.src = data.url;
+            player.load();
+            player.play();
+        }
+
+        $('#play-button').click(function () {
+            $.post("{% url 'tts' %}", {
+                'text': textbox.value
+            }, onSuccess);
+        });
+
+
+    });
+</script>
+{% endblock %}
